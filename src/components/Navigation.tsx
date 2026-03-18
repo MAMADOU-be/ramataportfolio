@@ -28,7 +28,7 @@ const Navigation = () => {
         </a>
 
         {/* Desktop */}
-        <div className="hidden md:flex gap-8">
+        <div className="hidden md:flex gap-8 items-center">
           {links.map((link) => (
             <a
               key={link.href}
@@ -38,6 +38,7 @@ const Navigation = () => {
               {link.label}
             </a>
           ))}
+          <img src={logo} alt="Une Peulh" className="h-10 ml-4" />
         </div>
 
         {/* Mobile toggle */}
