@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import logo from "@/assets/logo.png";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
