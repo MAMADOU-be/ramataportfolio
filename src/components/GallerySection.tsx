@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 import corporate1 from "@/assets/corporate-1.jpg";
 import corporate2 from "@/assets/corporate-2.jpg";
