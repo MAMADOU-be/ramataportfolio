@@ -14,7 +14,7 @@ import event3 from "@/assets/event-3.jpg";
 import event4 from "@/assets/event-4.jpg";
 import event5 from "@/assets/event-5.jpg";
 
-const ease = [0.16, 1, 0.3, 1];
+const ease = [0.16, 1, 0.3, 1] as const;
 
 type Category = "all" | "corporate" | "artistic" | "events";
 
