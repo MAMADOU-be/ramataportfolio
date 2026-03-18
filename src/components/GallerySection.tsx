@@ -43,8 +43,13 @@ const filters: { key: Category; label: string }[] = [
 
 const GallerySection = () => {
   const [active, setActive] = useState<Category>("all");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const filtered = active === "all" ? photos : photos.filter((p) => p.cat === active);
+
+  const closeLightbox = () => setLightboxIndex(null);
+  const goPrev = () => setLightboxIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : filtered.length - 1));
+  const goNext = () => setLightboxIndex((prev) => (prev !== null && prev < filtered.length - 1 ? prev + 1 : 0));
 
   return (
     <section id="gallery" className="px-6 md:px-12 lg:px-20 py-[15vh] border-t border-border">
@@ -100,7 +105,8 @@ const GallerySection = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.5, ease }}
-              className={`${spanClass} aspect-[4/3] overflow-hidden group relative`}
+              className={`${spanClass} aspect-[4/3] overflow-hidden group relative cursor-pointer`}
+              onClick={() => setLightboxIndex(i)}
             >
               <motion.img
                 whileHover={{ scale: 1.03 }}
@@ -119,6 +125,55 @@ const GallerySection = () => {
           );
         })}
       </motion.div>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center"
+            onClick={closeLightbox}
+          >
+            <button
+              onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
+              className="absolute top-6 right-6 text-foreground/70 hover:text-foreground transition-colors z-10"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); goPrev(); }}
+              className="absolute left-4 md:left-8 text-foreground/70 hover:text-foreground transition-colors z-10"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); goNext(); }}
+              className="absolute right-4 md:right-8 text-foreground/70 hover:text-foreground transition-colors z-10"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+
+            <motion.img
+              key={lightboxIndex}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3, ease }}
+              src={filtered[lightboxIndex].src}
+              alt={filtered[lightboxIndex].label}
+              className="max-h-[85vh] max-w-[90vw] object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+
+            <span className="absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              {filtered[lightboxIndex].label} — {lightboxIndex + 1}/{filtered.length}
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
