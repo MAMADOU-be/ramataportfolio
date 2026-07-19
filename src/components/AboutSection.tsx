@@ -41,7 +41,7 @@ const AboutSection = () => {
           Photographe
         </h2>
         <p className="text-base leading-pretty text-muted-foreground max-w-[55ch] mb-6">
-          Formé à la photographie au sein de Eyelitestudio, j'ai développé une maîtrise technique et artistique qui me
+          Formée à la photographie au sein de Eyelitestudio, j'ai développé une maîtrise technique et artistique qui me
           permet de sublimer mes sujets sous différents angles : portrait, studio, événements ou encore reportages
           visuels.
         </p>
